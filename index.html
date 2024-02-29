@@ -1,5 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P Communication</title>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+</head>
+<body>
+    <h1>P2P Communication Example</h1>
+    <button id="startButton">Start P2P Connection</button>
+
+    <script>
+        const startButton = document.getElementById('startButton');
+        let localConnection;
+        let remoteConnection;
+
+        startButton.addEventListener('click', async () => {
+            try {
+                // Create local peer connection
+                localConnection = new RTCPeerConnection();
+
+                // Create data channel for communication
+                const dataChannel = localConnection.createDataChannel('myDataChannel');
+
+                dataChannel.onopen = (event) => {
+                    console.log('Data channel opened');
+                };
+
+                dataChannel.onmessage = (event) => {
+                    console.log('Received message:', event.data);
+                };
+
+                // Set up local ICE candidate events
+                localConnection.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        // Send local ICE candidate to the remote peer
+                        // This is usually done through a signaling server in a real-world scenario
+                        console.log('Local ICE candidate:', event.candidate);
+                    }
+                };
+
+                // Create offer to start the WebRTC connection
+                const offer = await localConnection.createOffer();
+                await localConnection.setLocalDescription(offer);
+
+                // Send the offer to the remote peer
+                // This is where you would typically use a signaling server
+                console.log('Offer created:', offer);
+
+                // Simulate receiving the offer on the remote side
+                // In a real-world scenario, you would exchange this information with the remote peer
+                const receivedOffer = offer;
+
+                // Create remote peer connection
+                remoteConnection = new RTCPeerConnection();
+
+                // Set up remote ICE candidate events
+                remoteConnection.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        // Send remote ICE candidate to the local peer
+                        // This is usually done through a signaling server in a real-world scenario
+                        console.log('Remote ICE candidate:', event.candidate);
+                    }
+                };
+
+                // Set received offer as remote description
+                await remoteConnection.setRemoteDescription(receivedOffer);
+
+                // Create answer to accept the connection
+                const answer = await remoteConnection.createAnswer();
+                await remoteConnection.setLocalDescription(answer);
+
+                // Send the answer to the local peer
+                // This is where you would typically use a signaling server
+                console.log('Answer created:', answer);
+
+                // Simulate receiving the answer on the local side
+                // In a real-world scenario, you would exchange this information with the local peer
+                const receivedAnswer = answer;
+
+                // Set received answer as local description
+                await localConnection.setRemoteDescription(receivedAnswer);
+            } catch (error) {
+                console.error('Error creating P2P connection:', error);
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
 	<head>
 		<script>"use strict"</script>
 		<style>
@@ -17,4 +108,4 @@
 		<script src="script.js"></script>
 		<canvas id="canvas"></canvas>
 	</body>
-</html>
+</html> -->
