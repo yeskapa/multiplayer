@@ -1,39 +1,46 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>WebSocket Example</title>
-</head>
-<body>
-    <h1>WebSocket Example</h1>
+<html lang="en">
+	<head>
+		<script>"use strict"</script>
+		<style>
+			canvas {
+			   border: 0px solid rgb(0, 0, 244);
+			}
 
-    <script>
-        // Create a WebSocket connection
-        const socket = new WebSocket('wss://arcane-sands-37817-c448646235e1.herokuapp.com/');
-
-        // Event handler for when the connection is established
-        socket.onopen = function(event) {
-            console.log('WebSocket connection established');
-        };
-
-        // Event handler for receiving messages
-        socket.onmessage = function(event) {
-            const message = event.data;
-            console.log('Received message:', message);
-        };
-
-        // Event handler for when the connection is closed
-        socket.onclose = function(event) {
-            console.log('WebSocket connection closed');
-        };
-
-        // Function to send a message
-        function sendMessage() {
-            const message = document.getElementById('messageInput').value;
-            socket.send(message);
-        }
-    </script>
-
-    <input type="text" id="messageInput" placeholder="Type a message">
-    <button onclick="sendMessage()">Send</button>
-</body>
+			body {
+				margin: 0;
+				overflow: hidden;
+			}
+	   </style>
+	</head>
+	<body>
+		<script src="script.js"></script>
+		<canvas id="canvas"></canvas>
+	</body>
 </html>
+<!-- <script>
+    // Create a WebSocket connection
+    const socket = new WebSocket('https://arcane-sands-37817-c448646235e1.herokuapp.com/');
+
+    // Event handler for when the connection is established
+    socket.onopen = function(event) {
+        console.log('WebSocket connection established');
+    };
+
+    // Event handler for receiving messages
+    socket.onmessage = function(event) {
+        const message = event.data;
+        console.log('Received message:', message);
+    };
+
+    // Event handler for when the connection is closed
+    socket.onclose = function(event) {
+        console.log('WebSocket connection closed');
+    };
+
+    // Function to send a message
+    function sendMessage() {
+        const message = document.getElementById('messageInput').value;
+        socket.send(message);
+    }
+</script> --> 
