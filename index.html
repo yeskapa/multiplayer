@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html>
-	<head>
+<head>
+    <title>WebSocket Example</title>
+</head>
+<body>
+    <h1>WebSocket Example</h1>
 
-		<title> Real time multi-player games with HTML5</title>
+    <script>
+        // Create a WebSocket connection
+        const socket = new WebSocket('wss://your-heroku-app.herokuapp.com/socket');
 
-			<!-- Load style sheet -->
-		<link href="index.css" media="screen" rel="stylesheet">
+        // Event handler for when the connection is established
+        socket.onopen = function(event) {
+            console.log('WebSocket connection established');
+        };
 
-	<!-- Library code -->
-		
-		 	<!-- Load socket.io client side contents. -->
-		<script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+        // Event handler for receiving messages
+        socket.onmessage = function(event) {
+            const message = event.data;
+            console.log('Received message:', message);
+        };
 
+        // Event handler for when the connection is closed
+        socket.onclose = function(event) {
+            console.log('WebSocket connection closed');
+        };
 
-	 		<!-- Load the GUI rendering library code. -->
-		<script src="lib/dat.gui.min.js"></script>
-			<!-- Load the keyboard specific code --> 
-		<script src="lib/keyboard.js"></script>
-	 	
-	<!-- Game code -->
+        // Function to send a message
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            socket.send(message);
+        }
+    </script>
 
-	 		<!-- Load the common game code. -->
-		<script src="game.core.js"></script>
-			<!-- Finally, Load the game client code. -->
-		<script src="client.js"></script>		
-
-	</head>
-
-	<body>
-		<canvas id="viewport">
-		</canvas>
-	</body>
-
+    <input type="text" id="messageInput" placeholder="Type a message">
+    <button onclick="sendMessage()">Send</button>
+</body>
 </html>
