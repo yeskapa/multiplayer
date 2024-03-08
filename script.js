@@ -4,7 +4,7 @@ var ctx
 var player = {x:0, y:0}
 var otherPlayers = []
 
-const socket = new WebSocket('https://arcane-sands-37817-c448646235e1.herokuapp.com/')
+const socket = new WebSocket('https://arcane-sands-37817-c448646235e1.herokuapp.com')
 
 socket.onmessage = function(event) {
     const message = JSON.parse(event.data)
