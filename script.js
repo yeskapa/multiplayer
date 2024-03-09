@@ -1,10 +1,10 @@
-var can
-var ctx
+// var can
+// var ctx
 
-var player = {x:0, y:0}
-var otherPlayers = []
+// var player = {x:0, y:0}
+// var otherPlayers = []
 
-const socket = new WebSocket('wss://arcane-sands-37817-c448646235e1.herokuapp.com/')
+const socket = new WebSocket('https://arcane-sands-37817-c448646235e1.herokuapp.com/')
 
 socket.onmessage = function(event) {
     const message = JSON.parse(event.data)
@@ -12,50 +12,55 @@ socket.onmessage = function(event) {
     otherPlayers = message
 }
 
-socket.onopen = function(event) {console.log('WebSocket connection opened')}
-socket.onclose = function(event) {console.log('WebSocket connection closed')}
-
-window.onload = function() {
-    can = document.getElementById("canvas")
-    ctx = can.getContext("2d")
-
-    resizeCanvas()
-
-    update()
+socket.onopen = function(event) {
+    console.log('WebSocket connection opened')
+    socket.send("hi (from client)")
+}
+socket.onclose = function(event) {
+    console.log('WebSocket connection closed')
 }
 
-window.onresize = function() {
-    resizeCanvas()
-}
+// window.onload = function() {
+//     can = document.getElementById("canvas")
+//     ctx = can.getContext("2d")
 
-addEventListener("keydown", function(e) {
-    if (e.key == "w") player.y -= 10
-    if (e.key == "a") player.x -= 10
-    if (e.key == "s") player.y += 10
-    if (e.key == "d") player.x += 10
+//     resizeCanvas()
 
-    socket.send(JSON.stringify(player))
-})
+//     update()
+// }
 
-function drawPlayer(p) {
-    ctx.fillStyle = "#fff"
-    ctx.fillRect(p.x, p.y, 50, 50)
-}
+// window.onresize = function() {
+//     resizeCanvas()
+// }
 
-function resizeCanvas() {
-    can.width = innerWidth
-    can.height = innerHeight
-}
+// addEventListener("keydown", function(e) {
+//     if (e.key == "w") player.y -= 10
+//     if (e.key == "a") player.x -= 10
+//     if (e.key == "s") player.y += 10
+//     if (e.key == "d") player.x += 10
 
-function update() {
-    ctx.fillStyle = "#000"
-    ctx.fillRect(0, 0, innerWidth, innerHeight)
+//     socket.send(JSON.stringify(player))
+// })
 
-    drawPlayer(player)
-    for (var i = 0; i < otherPlayers.length; i++) {
-        drawPlayer(otherPlayers[i])
-    }
+// function drawPlayer(p) {
+//     ctx.fillStyle = "#fff"
+//     ctx.fillRect(p.x, p.y, 50, 50)
+// }
+
+// function resizeCanvas() {
+//     can.width = innerWidth
+//     can.height = innerHeight
+// }
+
+// function update() {
+//     ctx.fillStyle = "#000"
+//     ctx.fillRect(0, 0, innerWidth, innerHeight)
+
+//     drawPlayer(player)
+//     for (var i = 0; i < otherPlayers.length; i++) {
+//         drawPlayer(otherPlayers[i])
+//     }
 
 
-    window.requestAnimationFrame(update)
-}
+//     window.requestAnimationFrame(update)
+// }
