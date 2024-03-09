@@ -7,16 +7,19 @@ var otherPlayers = []
 const socket = new WebSocket('wss://arcane-sands-37817-c448646235e1.herokuapp.com/')
 
 socket.onmessage = function(event) {
+    if (event.data == "ping") return
     const message = JSON.parse(event.data)
-    
+    message.splice(message.indexof(player))
     otherPlayers = message
 }
 
 socket.onopen = function(event) {
     console.log('WebSocket connection opened')
 }
+
 socket.onclose = function(event) {
     console.log('WebSocket connection closed')
+    socket = new WebSocket('wss://arcane-sands-37817-c448646235e1.herokuapp.com/')
 }
 
 window.onload = function() {
