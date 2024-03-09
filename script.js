@@ -7,9 +7,10 @@ var otherPlayers = []
 const socket = new WebSocket('wss://arcane-sands-37817-c448646235e1.herokuapp.com/')
 
 socket.onmessage = function(event) {
-    const message = JSON.parse(event.data)
+    console.log("got message:" + event.data)
+    // const message = JSON.parse(event.data)
     
-    otherPlayers = message
+    // otherPlayers = message
 }
 
 socket.onopen = function(event) {
