@@ -38,6 +38,12 @@ window.onresize = function() {
 var keysDown = new Map()
 
 addEventListener("keydown", function(e) {
+    keysDown.set(e.key.toLowerCase(), true)
+
+    socket.send(JSON.stringify(player))
+})
+
+addEventListener("keyup", function(e) {
     keysDown.set(e.key, true)
 
     socket.send(JSON.stringify(player))
@@ -54,10 +60,12 @@ function resizeCanvas() {
 }
 
 function handleInput() {
+    var origin = {x:player.x, y:player.y}
     if (keysDown.get("w")) player.y -= playerSpeed
     if (keysDown.get("a")) player.x -= playerSpeed
     if (keysDown.get("s")) player.y += playerSpeed
     if (keysDown.get("d")) player.x += playerSpeed
+    if (player.x != origin.x && player.y != origin.y) socket.send(player)
 }
 
 function update() {
