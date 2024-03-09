@@ -65,7 +65,7 @@ function handleInput() {
     if (keysDown.get("a")) player.x -= playerSpeed
     if (keysDown.get("s")) player.y += playerSpeed
     if (keysDown.get("d")) player.x += playerSpeed
-    if (player.x != origin.x && player.y != origin.y) socket.send(player)
+    if (player.x != origin.x && player.y != origin.y) socket.send(JSON.stringify(player))
 }
 
 function update() {
