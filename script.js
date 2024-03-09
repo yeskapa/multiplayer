@@ -59,8 +59,6 @@ function handleInput() {
     if (keysDown.get("a")) player.x -= playerSpeed
     if (keysDown.get("s")) player.y += playerSpeed
     if (keysDown.get("d")) player.x += playerSpeed
-    // if socket is connected
-    if (socket.readyState == 1) socket.send(JSON.stringify(player))
 }
 
 function update() {
@@ -76,3 +74,7 @@ function update() {
 
     window.requestAnimationFrame(update)
 }
+
+setInterval(() => {
+    if (socket.readyState == 1) socket.send(JSON.stringify(player))
+}, 1000);
