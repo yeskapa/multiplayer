@@ -38,14 +38,10 @@ var keysDown = new Map()
 
 addEventListener("keydown", function(e) {
     keysDown.set(e.key.toLowerCase(), true)
-
-    socket.send(JSON.stringify(player))
 })
 
 addEventListener("keyup", function(e) {
     keysDown.set(e.key, true)
-
-    socket.send(JSON.stringify(player))
 })
 
 function drawPlayer(p) {
