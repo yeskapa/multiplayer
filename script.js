@@ -19,7 +19,6 @@ socket.onopen = function(event) {
 
 socket.onclose = function(event) {
     console.log('WebSocket connection closed')
-    socket = new WebSocket('wss://arcane-sands-37817-c448646235e1.herokuapp.com/')
 }
 
 window.onload = function() {
@@ -60,12 +59,11 @@ function resizeCanvas() {
 }
 
 function handleInput() {
-    var origin = {x:player.x, y:player.y}
     if (keysDown.get("w")) player.y -= playerSpeed
     if (keysDown.get("a")) player.x -= playerSpeed
     if (keysDown.get("s")) player.y += playerSpeed
     if (keysDown.get("d")) player.x += playerSpeed
-    if (player.x != origin.x && player.y != origin.y) socket.send(JSON.stringify(player))
+    socket.send(JSON.stringify(player))
 }
 
 function update() {
