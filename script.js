@@ -1,6 +1,8 @@
 var can
 var ctx
 
+const playerSpeed = 1
+
 var player = {x:0, y:0}
 var otherPlayers = []
 
@@ -33,11 +35,10 @@ window.onresize = function() {
     resizeCanvas()
 }
 
+var keysDown = new Map()
+
 addEventListener("keydown", function(e) {
-    if (e.key == "w") player.y -= 10
-    if (e.key == "a") player.x -= 10
-    if (e.key == "s") player.y += 10
-    if (e.key == "d") player.x += 10
+    keysDown.set(e.key, true)
 
     socket.send(JSON.stringify(player))
 })
@@ -52,9 +53,18 @@ function resizeCanvas() {
     can.height = innerHeight
 }
 
+function handleInput() {
+    if (keysDown.get("w")) player.y -= playerSpeed
+    if (keysDown.get("a")) player.x -= playerSpeed
+    if (keysDown.get("s")) player.y += playerSpeed
+    if (keysDown.get("d")) player.x += playerSpeed
+}
+
 function update() {
     ctx.fillStyle = "#000"
     ctx.fillRect(0, 0, innerWidth, innerHeight)
+
+    handleInput()
 
     drawPlayer(player)
     for (var i = 0; i < otherPlayers.length; i++) {
