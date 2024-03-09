@@ -2,15 +2,14 @@
 // var ctx
 
 // var player = {x:0, y:0}
-// var otherPlayers = []
+var otherPlayers = []
 
-const socket = new WebSocket('https://arcane-sands-37817-c448646235e1.herokuapp.com/')
+const socket = new WebSocket('wss://arcane-sands-37817-c448646235e1.herokuapp.com/')
 
 socket.onmessage = function(event) {
-    console.log("got message:" + event.data)
-    // const message = JSON.parse(event.data)
+    const message = JSON.parse(event.data)
     
-    // otherPlayers = message
+    otherPlayers = message
 }
 
 socket.onopen = function(event) {
