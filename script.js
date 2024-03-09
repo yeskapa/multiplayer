@@ -41,7 +41,7 @@ addEventListener("keydown", function(e) {
 })
 
 addEventListener("keyup", function(e) {
-    keysDown.set(e.key, true)
+    keysDown.set(e.key.toLowerCase(), false)
 })
 
 function drawPlayer(p) {
@@ -59,7 +59,8 @@ function handleInput() {
     if (keysDown.get("a")) player.x -= playerSpeed
     if (keysDown.get("s")) player.y += playerSpeed
     if (keysDown.get("d")) player.x += playerSpeed
-    socket.send(JSON.stringify(player))
+    // if socket is connected
+    if (socket.readyState == 1) socket.send(JSON.stringify(player))
 }
 
 function update() {
@@ -72,7 +73,6 @@ function update() {
     for (var i = 0; i < otherPlayers.length; i++) {
         drawPlayer(otherPlayers[i])
     }
-
 
     window.requestAnimationFrame(update)
 }
