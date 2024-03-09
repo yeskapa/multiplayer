@@ -8,9 +8,7 @@ const socket = new WebSocket('wss://arcane-sands-37817-c448646235e1.herokuapp.co
 
 socket.onmessage = function(event) {
     if (event.data == "ping") return
-    const message = JSON.parse(event.data)
-    message.splice(message.indexof(player))
-    otherPlayers = message
+    otherPlayers = JSON.parse(event.data)
 }
 
 socket.onopen = function(event) {
